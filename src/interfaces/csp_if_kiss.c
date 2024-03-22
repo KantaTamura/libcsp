@@ -25,9 +25,6 @@ int csp_kiss_tx(csp_iface_t * iface, uint16_t via, csp_packet_t * packet, int fr
 	csp_kiss_interface_data_t * ifdata = iface->interface_data;
 	void * driver = iface->driver_data;
 
-	/* Lock (before modifying packet) */
-	csp_usart_lock(driver);
-
 	/* Add CRC32 checksum */
 	csp_crc32_append(packet);
 
@@ -39,6 +36,9 @@ int csp_kiss_tx(csp_iface_t * iface, uint16_t via, csp_packet_t * packet, int fr
 	const unsigned char esc_end[] = {FESC, TFEND};
 	const unsigned char esc_esc[] = {FESC, TFESC};
 	const unsigned char * data = packet->frame_begin;
+
+	/* Lock Interface (before modifying packet) */
+	csp_usart_lock(driver);
 
 	ifdata->tx_func(driver, start, sizeof(start));
 
