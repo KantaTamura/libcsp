@@ -31,6 +31,7 @@ typedef struct kiss_context_t {
 	csp_iface_t iface;
 	csp_kiss_interface_data_t ifdata;
 	int fd;
+	void * lock;
 } kiss_context_t;
 
 /**
@@ -79,6 +80,11 @@ void csp_usart_lock(kiss_context_t * driver_data);
  * @param[in] driver_data Driver data
  */
 void csp_usart_unlock(kiss_context_t * driver_data);
+
+/**
+ *
+ */
+void * csp_usart_get_mutex();
 
 /**
  * Opens UART device and add KISS interface.

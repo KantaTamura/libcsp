@@ -20,15 +20,18 @@ typedef struct {
 	pthread_t rx_thread;
 } usart_context_t;
 
-/* Linux is fast, so we keep it simple by having a single lock */
-static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
-
 void csp_usart_lock(kiss_context_t * driver_data) {
-	pthread_mutex_lock(&lock);
+	pthread_mutex_lock((pthread_mutex_t *)driver_data->lock);
 }
 
 void csp_usart_unlock(kiss_context_t * driver_data) {
-	pthread_mutex_unlock(&lock);
+	pthread_mutex_unlock((pthread_mutex_t *)driver_data->lock);
+}
+
+void * csp_usart_get_mutex() {
+	pthread_mutex_t * lock = calloc(1, sizeof(pthread_mutex_t *));
+	pthread_mutex_init(lock, NULL);
+	return lock;
 }
 
 static void * usart_rx_thread(void * arg) {

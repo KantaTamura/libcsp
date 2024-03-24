@@ -40,6 +40,7 @@ int csp_usart_open_and_add_kiss_interface(const csp_usart_conf_t * conf, const c
 	ctx->iface.interface_data = &ctx->ifdata;
 	ctx->ifdata.tx_func = kiss_driver_tx;
 	ctx->fd = -1;
+	ctx->lock = csp_usart_get_mutex();
 
 	int res = csp_kiss_add_interface(&ctx->iface);
 	if (res == CSP_ERR_NONE) {
