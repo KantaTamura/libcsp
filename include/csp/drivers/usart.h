@@ -19,11 +19,11 @@ extern "C" {
  * @see csp_usart_open()
  */
 typedef struct csp_usart_conf {
-    const char *device; /**< USART device.*/
-    uint32_t baudrate; /**< bits per second. */
-    uint8_t databits; /**< Number of data bits. */
-    uint8_t stopbits; /**< Number of stop bits. */
-    uint8_t paritysetting; /**< Parity setting. */
+	const char * device;   /**< USART device.*/
+	uint32_t baudrate;     /**< bits per second. */
+	uint8_t databits;      /**< Number of data bits. */
+	uint8_t stopbits;      /**< Number of stop bits. */
+	uint8_t paritysetting; /**< Parity setting. */
 } csp_usart_conf_t;
 
 /**
@@ -34,7 +34,7 @@ typedef struct csp_usart_conf {
  * @param[in] len data length (number of bytes in \a buf).
  * @param[out] pxTaskWoken Valid reference if called from ISR, otherwise NULL!
  */
-typedef void (*csp_usart_callback_t) (void * user_data, uint8_t *buf, size_t len, void *pxTaskWoken);
+typedef void (*csp_usart_callback_t)(void * user_data, uint8_t * buf, size_t len, void * pxTaskWoken);
 
 /**
  * Opens an UART device.
@@ -48,7 +48,7 @@ typedef void (*csp_usart_callback_t) (void * user_data, uint8_t *buf, size_t len
  * @param[out] fd the opened file descriptor.
  * @return #CSP_ERR_NONE on success, otherwise an error code.
  */
-int csp_usart_open(const csp_usart_conf_t *conf, csp_usart_callback_t rx_callback, void * user_data, int * fd);
+int csp_usart_open(const csp_usart_conf_t * conf, csp_usart_callback_t rx_callback, void * user_data, int * fd);
 
 /**
  * Write data on open UART.
@@ -85,7 +85,7 @@ void csp_usart_unlock(void * driver_data);
  * @param[out] return_iface the added interface.
  * @return #CSP_ERR_NONE on success, otherwise an error code.
  */
-int csp_usart_open_and_add_kiss_interface(const csp_usart_conf_t *conf, const char * ifname, csp_iface_t ** return_iface);
+int csp_usart_open_and_add_kiss_interface(const csp_usart_conf_t * conf, const char * ifname, csp_iface_t ** return_iface);
 
 #ifdef __cplusplus
 }
