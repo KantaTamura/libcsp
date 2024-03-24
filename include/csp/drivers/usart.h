@@ -26,6 +26,13 @@ typedef struct csp_usart_conf {
 	uint8_t paritysetting; /**< Parity setting. */
 } csp_usart_conf_t;
 
+typedef struct kiss_context_t {
+	char name[CSP_IFLIST_NAME_MAX + 1];
+	csp_iface_t iface;
+	csp_kiss_interface_data_t ifdata;
+	int fd;
+} kiss_context_t;
+
 /**
  * Callback for returning data to application.
  *
@@ -64,14 +71,14 @@ int csp_usart_write(int fd, const void * data, size_t data_length);
  *
  * @param[in] driver_data Driver data
  */
-void csp_usart_lock(void * driver_data);
+void csp_usart_lock(kiss_context_t * driver_data);
 
 /**
  * Unlock the USART again
  *
  * @param[in] driver_data Driver data
  */
-void csp_usart_unlock(void * driver_data);
+void csp_usart_unlock(kiss_context_t * driver_data);
 
 /**
  * Opens UART device and add KISS interface.

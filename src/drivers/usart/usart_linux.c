@@ -23,11 +23,11 @@ typedef struct {
 /* Linux is fast, so we keep it simple by having a single lock */
 static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
-void csp_usart_lock(void * driver_data) {
+void csp_usart_lock(kiss_context_t * driver_data) {
 	pthread_mutex_lock(&lock);
 }
 
-void csp_usart_unlock(void * driver_data) {
+void csp_usart_unlock(kiss_context_t * driver_data) {
 	pthread_mutex_unlock(&lock);
 }
 

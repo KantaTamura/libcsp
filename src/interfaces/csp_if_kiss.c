@@ -38,7 +38,7 @@ int csp_kiss_tx(csp_iface_t * iface, uint16_t via, csp_packet_t * packet, int fr
 	const unsigned char * data = packet->frame_begin;
 
 	/* Lock Interface (before modifying packet) */
-	csp_usart_lock(driver);
+	csp_usart_lock((kiss_context_t *)driver);
 
 	ifdata->tx_func(driver, start, sizeof(start));
 
@@ -57,7 +57,7 @@ int csp_kiss_tx(csp_iface_t * iface, uint16_t via, csp_packet_t * packet, int fr
 	ifdata->tx_func(driver, stop, sizeof(stop));
 
 	/* Unlock */
-	csp_usart_unlock(driver);
+	csp_usart_unlock((kiss_context_t *)driver);
 
 	/* Free data */
 	csp_buffer_free(packet);
