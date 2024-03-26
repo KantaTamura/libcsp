@@ -9,10 +9,13 @@
 #pragma once
 
 #include <csp/interfaces/csp_if_kiss.h>
+#include <pthread.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+typedef pthread_mutex_t csp_usart_mutex_t;
 
 /**
  * Usart configuration.
@@ -31,7 +34,7 @@ typedef struct kiss_context_t {
 	csp_iface_t iface;
 	csp_kiss_interface_data_t ifdata;
 	int fd;
-	void * lock;
+	csp_usart_mutex_t lock;
 } kiss_context_t;
 
 /**
@@ -82,9 +85,11 @@ void csp_usart_lock(kiss_context_t * driver_data);
 void csp_usart_unlock(kiss_context_t * driver_data);
 
 /**
+ * Set Mutex variable
  *
+ * @param[in] driver_data Driver data
  */
-void * csp_usart_get_mutex();
+void csp_usart_set_mutex(kiss_context_t * driver_data);
 
 /**
  * Opens UART device and add KISS interface.

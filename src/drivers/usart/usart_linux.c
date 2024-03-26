@@ -21,17 +21,15 @@ typedef struct {
 } usart_context_t;
 
 void csp_usart_lock(kiss_context_t * driver_data) {
-	pthread_mutex_lock((pthread_mutex_t *)driver_data->lock);
+	pthread_mutex_lock(&driver_data->lock);
 }
 
 void csp_usart_unlock(kiss_context_t * driver_data) {
-	pthread_mutex_unlock((pthread_mutex_t *)driver_data->lock);
+	pthread_mutex_unlock(&driver_data->lock);
 }
 
-void * csp_usart_get_mutex() {
-	pthread_mutex_t * lock = calloc(1, sizeof(pthread_mutex_t *));
-	pthread_mutex_init(lock, NULL);
-	return lock;
+void csp_usart_set_mutex(kiss_context_t * driver_data) {
+	pthread_mutex_init(&driver_data->lock, NULL);
 }
 
 static void * usart_rx_thread(void * arg) {
